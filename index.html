@@ -11,10 +11,8 @@
 
 // Parse the URL
 function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&amp;]" + name + "=([^&amp;#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
 }
 // Give the URL parameters variable names
 var source = getParameterByName('utm_source');
@@ -73,6 +71,13 @@ function getCookieUTM(){
   document.getElementById("utm_campaign").innerHTML=current_utm_campaign
   document.getElementById("utm_medium").innerHTML=current_utm_medium
   document.getElementById("utm_content").innerHTML=current_utm_content
+
+  var x = document.getElementById("cookie_div");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
   }
 
 
@@ -85,20 +90,31 @@ function getCookieUTM(){
 <body>
   <div>
     <h1>Cookies</h1>
-    <span id="utm_source">
-    </span>
+    <div style="display:none" id ="cookie_div">
+    <div>
+      <h4>Utm Source</h4>
+      <span id="utm_source">
+      </span>
+    </div>
+    <div>
+      <h4>Utm campaign</h4>
     <span id="utm_campaign">
     </span>
+    </div>
+    <div>
+      <h4>Utm Medium</h4>
     <span id="utm_medium">
     </span>
-    <span id="utm_content">
+    </div>
+    <div>
+      <h4>Utm Content</h4>
+       <span id="utm_content">
     </span>
+    </div>
   </div>
-
+  </div>
 <div>
   <button onclick="getCookieUTM()">fetch cookie</button>
-  
 </div>
 </body>
-
 </html>
